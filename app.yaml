@@ -1,6 +1,5 @@
 # [START nr-proxy]
-runtime: nodejs
-env: flex
+runtime: nodejs10
 
 # Use only a single instance. 
 manual_scaling:
