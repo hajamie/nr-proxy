@@ -2,7 +2,7 @@
   "name": "nr-proxy",
   "version": "1.0.0",
   "description": "Proxy requests to Node Red",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/hajamie/nr-proxy/issues"
   },
-  "homepage": "https://github.com/hajamie/nr-proxy#readme"
+  "homepage": "https://github.com/hajamie/nr-proxy#readme",
+  "dependencies": {
+    "ws": "^6.2.1"
+  }
 }
