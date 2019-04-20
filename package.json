@@ -4,7 +4,7 @@
   "description": "Proxy requests to Node Red",
   "main": "app.js",
   "engines": {
-    "node": "10.x.x"
+    "node": ">=8"
   },
   "scripts": {
     "deploy": "gcloud app deploy",
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/hajamie/nr-proxy#readme",
   "dependencies": {
+    "@google-cloud/debug-agent": "^3.1.0",
     "ws": "^6.2.1"
   }
 }

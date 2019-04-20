@@ -1,5 +1,6 @@
 # [START nr-proxy]
-runtime: nodejs10
+runtime: nodejs
+env: flex
 
 # Use only a single instance. 
 manual_scaling:
@@ -8,4 +9,3 @@ manual_scaling:
 network:
   session_affinity: true
 # [END nr-proxy]
-
