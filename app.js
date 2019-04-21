@@ -1,9 +1,17 @@
+// Environment variables. 
+console.log('Environment variables for "' + process.env.GOOGLE_CLOUD_PROJECT + '". Env: "' + process.env.NODE_ENV + '". Port: "' + process.env.PORT + '"');
+const PORT = process.env.PORT || 8080;
+const NODE_ENV = process.env.NODE_ENV || 'test';
+const GOOGLE_CLOUD_PROJECT = process.env.GOOGLE_CLOUD_PROJECT || 'unknown';
+console.log('Starting ' + GOOGLE_CLOUD_PROJECT + '. Env: ' + NODE_ENV + '. Port: ' + PORT);
+
 // Enable App Engine debugging. 
-require('@google-cloud/debug-agent').start();
+if (NODE_ENV == 'production') {
+  require('@google-cloud/debug-agent').start();
+}
 const WebSocket = require('ws');
 const http = require('http');
 
-const PORT = process.env.PORT || 8080;
 
 // Handle HTTP. 
 var server = http.createServer(function (request, response) {
@@ -52,9 +60,11 @@ var wss = new WebSocket.Server({
 console.log('Socket listening on ' + PORT);
 
 wss.on('connection', function connection(ws) {
+  // Log incoming messages. TODO: more functionality. 
   ws.on('message', function incoming(message) {
     console.log('received: %s', message);
   });
+  // Logging other events. 
   ws.on('close', function incoming(code, reason) {
     logClient(ws, 'Closed. Code: ' + code + '. Reason: ' + reason);
   });
@@ -67,6 +77,10 @@ wss.on('connection', function connection(ws) {
   ws.on('upgrade', function incoming(response) {
     logClient(ws, 'upgrade');
   });
+  // Keep track of live connections. 
+  ws.isAlive = true;
+  ws.on('pong', function(){this.isAlive = true});
+  // Respond on connection. 
   ws.send(JSON.stringify({"status": "Connected"}));
 });
 
@@ -81,3 +95,13 @@ wss.on('error', function(error) {
 wss.on('close', function(close) {
   console.log('Close: ' + close);
 });
+
+// Detect broken connections. 
+function noop() {}
+const interval = setInterval(function ping() {
+  wss.clients.forEach(function each(ws) {
+    if (ws.isAlive === false) return ws.terminate();
+    ws.isAlive = false;
+    ws.ping(noop);
+  });
+}, 30000);
