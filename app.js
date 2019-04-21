@@ -5,25 +5,6 @@ const http = require('http');
 
 const PORT = process.env.PORT || 8080;
 
-
-
-var socket = new WebSocket('ws://nr-proxy.appspot.com');
-socket.setMaxListeners(0);
-socket.on('open',function() {
-  console.log('opened');
-});
-socket.on('close',function() {
-  console.log('closed');
-});
-socket.on('message',function(data,flags) {
-  console.log('Message: ' + data);
-});
-socket.on('error', function(err) {
-  console.log('error: ' + err);
-});
-
-
-
 // Handle HTTP. 
 var server = http.createServer(function (request, response) {
   console.log('Received request for ' + request.url);
@@ -39,6 +20,7 @@ var server = http.createServer(function (request, response) {
         }
         console.log('Event: ' + data.event);
         console.log('Clients: ' + wss.clients.size);
+        // Send the event to clients. 
         wss.clients.forEach(function each(client) {
           client.send(JSON.stringify({"event": data.event}));
         });
@@ -73,9 +55,29 @@ wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(message) {
     console.log('received: %s', message);
   });
-  ws.send('Connected');
+  ws.on('close', function incoming(code, reason) {
+    logClient(ws, 'Closed. Code: ' + code + '. Reason: ' + reason);
+  });
+  ws.on('error', function incoming(error) {
+    logClient(ws, 'Error: ' + error);
+  });
+  ws.on('unexpected-response', function incoming(request, response) {
+    logClient(ws, 'unexpected-response');
+  });
+  ws.on('upgrade', function incoming(response) {
+    logClient(ws, 'upgrade');
+  });
+  ws.send(JSON.stringify({"status": "Connected"}));
 });
+
+function logClient(ws, message) {
+  console.log('Client ' + ws._socket.remoteAddress + ':' + ws._socket.remotePort + ' ' + message);
+}
 
 wss.on('error', function(error) {
   console.log('ERROR: ' + error);
+});
+
+wss.on('close', function(close) {
+  console.log('Close: ' + close);
 });
