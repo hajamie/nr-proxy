@@ -25,6 +25,8 @@
   "homepage": "https://github.com/hajamie/nr-proxy#readme",
   "dependencies": {
     "@google-cloud/debug-agent": "^3.1.0",
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.2",
     "ws": "^6.2.1"
   }
 }

@@ -1,16 +1,16 @@
 # nr-proxy
 Proxy HTTP requests over to a websocket. 
 
-  * Runs on Google App Engine (GAE)
-  * Has to be in the flexible environment so that websockets can connect
+  - Runs on Google App Engine (GAE)
+  - Has to be in the flexible environment so that websockets can connect
 
 ## Prerequisites
-  * Download the [Google Cloud SDK](https://cloud.google.com/sdk/docs/)
-  * Create a project: `gcloud projects create [YOUR_PROJECT_NAME] --set-as-default`
-  * Initialise app: `gcloud app create --project=[YOUR_PROJECT_NAME]`
-  * [Enable billing](https://console.cloud.google.com/projectselector/billing?lang=nodejs&st=true)
-  * Install [Git](https://git-scm.com/)
-  * Install [Node.js](https://nodejs.org/)
+  - Download the [Google Cloud SDK](https://cloud.google.com/sdk/docs/)
+  - Create a project: `gcloud projects create [YOUR_PROJECT_NAME] --set-as-default`
+  - Initialise app: `gcloud app create --project=[YOUR_PROJECT_NAME]`
+  - [Enable billing](https://console.cloud.google.com/projectselector/billing?lang=nodejs&st=true)
+  - Install [Git](https://git-scm.com/)
+  - Install [Node.js](https://nodejs.org/)
 
 ## Run the proxy
 ```
@@ -31,5 +31,5 @@ HTTP is redirected to HTTPS when deployed to GAE.
 [See Google's setup instructions](https://cloud.google.com/appengine/docs/flexible/nodejs/securing-custom-domains-with-ssl)
 
 ## Useful tools
-  * [WebSocket Test Client](https://chrome.google.com/webstore/detail/websocket-test-client/fgponpodhbmadfljofbimhhlengambbn) Chrome extension
-  * [Postman](https://www.getpostman.com/downloads/) API Development Environment
+  - [WebSocket Test Client](https://chrome.google.com/webstore/detail/websocket-test-client/fgponpodhbmadfljofbimhhlengambbn) Chrome extension
+  - [Postman](https://www.getpostman.com/downloads/) API Development Environment
