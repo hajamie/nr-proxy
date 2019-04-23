@@ -5,6 +5,7 @@
    * Multi user (initially websocket provides ID, html request requires the ID)
    * Google actions. Generic and smart home.  Oauth?
    * Proxy HTTP over websocket
+   * Create websocket server for HTTP.  Create Docker image. 
    * Organise better. Initially, 
      - controllers.js
      - util.js
